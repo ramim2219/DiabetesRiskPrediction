@@ -1,0 +1,223 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Risk Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background-color: #f4f4f4;
+        }
+
+        /* Navbar */
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: #2C3E50;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 70px;
+            z-index: 1000;
+            color: white;
+        }
+
+        .header h2 {
+            font-size: 24px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: #1ABC9C;
+        }
+
+        /* Main Content */
+        .content-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+            background: url("{% static 'DiabetesPrediction/images/prediction.jpg' %}") no-repeat center center / cover;
+            padding-top: 120px;
+            padding-bottom: 50px;
+        }
+
+        /* Form Container */
+        .content {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2C3E50;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: #1ABC9C;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #16A085;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #E74C3C;
+        }
+
+        /* Footer */
+        .footer {
+            width: 100%;
+            padding: 15px 0;
+            background: #2C3E50;
+            color: white;
+            text-align: center;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="header">
+        <h2>Diabetes Risk Prediction</h2>
+        <nav class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Check Risk</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="content-container">
+        <div class="content">
+            <h1>Enter Your Details</h1>
+            <form action="result">
+                <div class="form-group"><label>Age:</label><input type="text" name="age"></div>
+                
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <select name="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                
+                <div class="form-group"><label>Pulse Rate:</label><input type="text" name="pulse_rate"></div>
+                <div class="form-group"><label>Systolic BP:</label><input type="text" name="systolic_bp"></div>
+                <div class="form-group"><label>Diastolic BP:</label><input type="text" name="diastolic_bp"></div>
+                <div class="form-group"><label>Glucose Level:</label><input type="text" name="glucose"></div>
+                <div class="form-group"><label>Height (cm):</label><input type="text" name="height"></div>
+                <div class="form-group"><label>Weight (kg):</label><input type="text" name="weight"></div>
+                <div class="form-group"><label>BMI:</label><input type="text" name="bmi"></div>
+
+                <div class="form-group">
+                    <label>Family History of Diabetes:</label>
+                    <select name="family_diabetes">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Hypertensive:</label>
+                    <select name="hypertensive">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Family History of Hypertension:</label>
+                    <select name="family_hypertension">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Cardiovascular Disease:</label>
+                    <select name="cardiovascular_disease">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Stroke History:</label>
+                    <select name="stroke">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">Check Risk</button>
+            </form>
+            <div class="result">Result: {{ result2 }}</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; 2025 Diabetes Prediction. All Rights Reserved.
+    </footer>
+</body>
+</html>
